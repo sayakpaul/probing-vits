@@ -1,6 +1,6 @@
 # USAGE
-# python train.py --classifier class --position learn
-# python train.py --classifier class --position sincos
+# python train.py --classifier token --position learn
+# python train.py --classifier token --position sincos
 # python train.py --classifier gap --position learn
 # python train.py --classifier gap --position sincos
 

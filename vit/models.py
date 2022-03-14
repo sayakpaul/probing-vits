@@ -1,4 +1,6 @@
 # import the necessary packages
+from .pos_embed import PositionalEmbedding
+
 import ml_collections
 import tensorflow as tf
 from tensorflow import keras
