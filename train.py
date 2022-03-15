@@ -17,14 +17,17 @@ from vit import (
 )
 
 import pprint
+
 pp = pprint.PrettyPrinter(indent=4)
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-c", "--classifier", required=True,
-    help="token or gap for the vit representation")
-ap.add_argument("-p", "--position", required=True,
-    help="learn or sincos for positional embedding")
+ap.add_argument(
+    "-c", "--classifier", required=True, help="token or gap for the vit representation"
+)
+ap.add_argument(
+    "-p", "--position", required=True, help="learn or sincos for positional embedding"
+)
 args = vars(ap.parse_args())
 
 # manipulating the configuration for CIFAR

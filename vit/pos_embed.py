@@ -4,6 +4,7 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 
+
 class PositionalEmbedding(layers.Layer):
     def __init__(self, config: ml_collections.ConfigDict, **kwargs):
         super().__init__(**kwargs)

@@ -8,6 +8,7 @@ from tensorflow.keras import layers
 
 from typing import List
 
+
 def mlp(x: int, dropout_rate: float, hidden_units: List):
     # Iterate over the hidden units and
     # add Dense => Dropout.
@@ -20,6 +21,7 @@ def mlp(x: int, dropout_rate: float, hidden_units: List):
         )(x)
         x = layers.Dropout(dropout_rate)(x)
     return x
+
 
 def transformer(config: ml_collections.ConfigDict, name: str) -> keras.Model:
     num_patches = (
@@ -54,6 +56,7 @@ def transformer(config: ml_collections.ConfigDict, name: str) -> keras.Model:
 
     return keras.Model(encoded_patches, [outputs, attention_score], name=name)
 
+
 def get_augmentation_model(config: ml_collections.ConfigDict):
     data_augmentation = keras.Sequential(
         [
@@ -65,6 +68,7 @@ def get_augmentation_model(config: ml_collections.ConfigDict):
     )
     return data_augmentation
 
+
 class ViTClassifier(keras.Model):
     def __init__(self, config: ml_collections.ConfigDict, **kwargs):
         super().__init__(**kwargs)
@@ -72,20 +76,23 @@ class ViTClassifier(keras.Model):
 
         self.augmentation = get_augmentation_model(config=self.config)
 
-        self.projection = keras.Sequential([
-            layers.Conv2D(
-                filters=config.projection_dim,
-                kernel_size=(config.patch_size, config.patch_size),
-                strides=(config.patch_size, config.patch_size),
-                padding="VALID",
-                name="conv_projection",
-            ),
-            layers.Reshape(
-                target_shape=(config.num_patches, config.projection_dim),
-                name="flatten_projection"
-            )
-        ], name="projection")
-        
+        self.projection = keras.Sequential(
+            [
+                layers.Conv2D(
+                    filters=config.projection_dim,
+                    kernel_size=(config.patch_size, config.patch_size),
+                    strides=(config.patch_size, config.patch_size),
+                    padding="VALID",
+                    name="conv_projection",
+                ),
+                layers.Reshape(
+                    target_shape=(config.num_patches, config.projection_dim),
+                    name="flatten_projection",
+                ),
+            ],
+            name="projection",
+        )
+
         self.positional_embedding = PositionalEmbedding(
             config, name="positional_embedding"
         )
@@ -149,7 +156,7 @@ class ViTClassifier(keras.Model):
 
         # Classification head.
         output = self.classifier_head(encoded_patches)
-        
+
         if not training:
             return output, attention_scores
         return output
