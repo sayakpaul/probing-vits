@@ -72,8 +72,7 @@ print("🚀 [INFO] Compiling the model...")
 total_steps = int(train_ds.cardinality().numpy() * cifar_config.epochs)
 warmup_steps = int(total_steps * cifar_config.warmup_epoch_percentage)
 scheduled_lrs = WarmUpCosine(
-    lr_start=cifar_config.lr_start,
-    lr_max=cifar_config.lr_max,
+    config=cifar_config,
     warmup_steps=warmup_steps,
     total_steps=total_steps,
 )

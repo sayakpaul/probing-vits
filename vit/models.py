@@ -72,14 +72,20 @@ class ViTClassifier(keras.Model):
 
         self.augmentation = get_augmentation_model(config=self.config)
 
-        self.projection = layers.Conv2D(
-            filters=config.projection_dim,
-            kernel_size=(config.patch_size, config.patch_size),
-            strides=(config.patch_size, config.patch_size),
-            padding="VALID",
-            name="projection",
-        )
-
+        self.projection = keras.Sequential([
+            layers.Conv2D(
+                filters=config.projection_dim,
+                kernel_size=(config.patch_size, config.patch_size),
+                strides=(config.patch_size, config.patch_size),
+                padding="VALID",
+                name="conv_projection",
+            ),
+            layers.Reshape(
+                target_shape=(config.num_patches, config.projection_dim),
+                name="flatten_projection"
+            )
+        ], name="projection")
+        
         self.positional_embedding = PositionalEmbedding(
             config, name="positional_embedding"
         )
@@ -109,12 +115,10 @@ class ViTClassifier(keras.Model):
 
         # Create patches and project the pathces.
         projected_patches = self.projection(inputs)
-        n, h, w, c = projected_patches.shape
-        projected_patches = tf.reshape(projected_patches, [n, h * w, c])
 
         # Append class token if needed.
         if self.config.classifier == "token":
-            cls_token = tf.tile(self.cls_token, (n, 1, 1))
+            cls_token = tf.tile(self.cls_token, (self.config.batch_size, 1, 1))
             projected_patches = tf.concat([cls_token, projected_patches], axis=1)
 
         # Add positional embeddings to the projected patches.
