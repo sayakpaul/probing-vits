@@ -20,7 +20,7 @@ ap.add_argument("-p", "--position", required=True,
     help="learn or sincos for positional embedding")
 args = vars(ap.parse_args())
 
-# build the models
+# manipulating the configuration
 vit_b16_config = get_config()
 with vit_b16_config.unlocked():
     vit_b16_config.pos_emb_mode = args["position"]
@@ -32,3 +32,9 @@ print(
 vit_classifier = ViTClassifier(vit_b16_config, name="vit_cls_token_pos_sincos")
 random_logits = vit_classifier(tf.ones((10, 224, 224, 3)))
 print(random_logits.shape)
+
+# Get the attention scores
+vit_classifier.training = False
+random_logits, random_attention_scores = vit_classifier(tf.ones((10, 224, 224, 3)))
+for name, random_attention_score in random_attention_scores.items():
+    print(name, random_attention_score.shape)

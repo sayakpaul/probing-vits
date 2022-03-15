@@ -33,11 +33,11 @@ def transformer(config: ml_collections.ConfigDict, name: str) -> keras.Model:
     x1 = layers.LayerNormalization(epsilon=config.layer_norm_eps)(encoded_patches)
 
     # Multi Head Self Attention layer 1.
-    attention_output = layers.MultiHeadAttention(
+    attention_output, attention_score = layers.MultiHeadAttention(
         num_heads=config.num_heads,
         key_dim=config.projection_dim,
         dropout=config.dropout_rate,
-    )(x1, x1)
+    )(x1, x1, return_attention_scores=True)
     attention_output = layers.Dropout(config.dropout_rate)(attention_output)
 
     # Skip connection 1.
@@ -52,12 +52,13 @@ def transformer(config: ml_collections.ConfigDict, name: str) -> keras.Model:
     # Skip connection 2.
     outputs = layers.Add()([x2, x4])
 
-    return keras.Model(encoded_patches, outputs, name=name)
+    return keras.Model(encoded_patches, [outputs, attention_score], name=name)
 
 class ViTClassifier(keras.Model):
-    def __init__(self, config: ml_collections.ConfigDict, **kwargs):
+    def __init__(self, config: ml_collections.ConfigDict, training=True, **kwargs):
         super().__init__(**kwargs)
         self.config = config
+        self.training = training
 
         self.projection = layers.Conv2D(
             filters=config.projection_dim,
@@ -107,11 +108,16 @@ class ViTClassifier(keras.Model):
         )  # (B, number_patches, projection_dim)
         encoded_patches = self.dropout(encoded_patches)
 
+        if not self.training:
+            attention_scores = dict()
+
         # Iterate over the number of layers and stack up blocks of
         # Transformer.
         for transformer_module in self.transformer_blocks:
             # Add a Transformer block.
-            encoded_patches = transformer_module(encoded_patches)
+            encoded_patches, attention_score = transformer_module(encoded_patches)
+            if not self.training:
+                attention_scores[f"{transformer_module.name}_att"] = attention_score
 
         # Final layer normalization.
         representation = self.layer_norm(encoded_patches)
@@ -124,5 +130,7 @@ class ViTClassifier(keras.Model):
 
         # Classification head.
         output = self.classifier_head(encoded_patches)
-
+        
+        if not self.training:
+            return output, attention_scores
         return output
