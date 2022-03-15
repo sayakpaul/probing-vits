@@ -54,10 +54,23 @@ def transformer(config: ml_collections.ConfigDict, name: str) -> keras.Model:
 
     return keras.Model(encoded_patches, [outputs, attention_score], name=name)
 
+def get_augmentation_model(config: ml_collections.ConfigDict):
+    data_augmentation = keras.Sequential(
+        [
+            layers.Resizing(config.input_shape[0] + 20, config.input_shape[0] + 20),
+            layers.RandomCrop(config.image_size, config.image_size),
+            layers.RandomFlip("horizontal"),
+            layers.Rescaling(1 / 255.0),
+        ]
+    )
+    return data_augmentation
+
 class ViTClassifier(keras.Model):
     def __init__(self, config: ml_collections.ConfigDict, **kwargs):
         super().__init__(**kwargs)
         self.config = config
+
+        self.augmentation = get_augmentation_model(config=self.config)
 
         self.projection = layers.Conv2D(
             filters=config.projection_dim,
@@ -91,6 +104,9 @@ class ViTClassifier(keras.Model):
         )
 
     def call(self, inputs, training=True):
+        # Augment the input images
+        inputs = self.augmentation(inputs, training=training)
+
         # Create patches and project the pathces.
         projected_patches = self.projection(inputs)
         n, h, w, c = projected_patches.shape
