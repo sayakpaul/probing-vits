@@ -55,10 +55,9 @@ def transformer(config: ml_collections.ConfigDict, name: str) -> keras.Model:
     return keras.Model(encoded_patches, [outputs, attention_score], name=name)
 
 class ViTClassifier(keras.Model):
-    def __init__(self, config: ml_collections.ConfigDict, training=True, **kwargs):
+    def __init__(self, config: ml_collections.ConfigDict, **kwargs):
         super().__init__(**kwargs)
         self.config = config
-        self.training = training
 
         self.projection = layers.Conv2D(
             filters=config.projection_dim,
@@ -91,7 +90,7 @@ class ViTClassifier(keras.Model):
             config.num_classes, kernel_initializer="zeros", name="classifier"
         )
 
-    def call(self, inputs):
+    def call(self, inputs, training=True):
         # Create patches and project the pathces.
         projected_patches = self.projection(inputs)
         n, h, w, c = projected_patches.shape
@@ -108,7 +107,7 @@ class ViTClassifier(keras.Model):
         )  # (B, number_patches, projection_dim)
         encoded_patches = self.dropout(encoded_patches)
 
-        if not self.training:
+        if not training:
             attention_scores = dict()
 
         # Iterate over the number of layers and stack up blocks of
@@ -116,7 +115,7 @@ class ViTClassifier(keras.Model):
         for transformer_module in self.transformer_blocks:
             # Add a Transformer block.
             encoded_patches, attention_score = transformer_module(encoded_patches)
-            if not self.training:
+            if not training:
                 attention_scores[f"{transformer_module.name}_att"] = attention_score
 
         # Final layer normalization.
@@ -131,6 +130,6 @@ class ViTClassifier(keras.Model):
         # Classification head.
         output = self.classifier_head(encoded_patches)
         
-        if not self.training:
+        if not training:
             return output, attention_scores
         return output
