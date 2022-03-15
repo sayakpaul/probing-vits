@@ -12,13 +12,15 @@ def get_cifar_dataset(config):
     AUTO = tf.data.AUTOTUNE
     train_ds = tf.data.Dataset.from_tensor_slices((x_train, y_train))
     train_ds = (
-        train_ds.shuffle(config.buffer_size).batch(config.batch_size).prefetch(AUTO)
+        train_ds.shuffle(config.buffer_size)
+        .batch(config.batch_size, drop_remainder=True)
+        .prefetch(AUTO)
     )
 
     val_ds = tf.data.Dataset.from_tensor_slices((x_val, y_val))
-    val_ds = val_ds.batch(config.batch_size).prefetch(AUTO)
+    val_ds = val_ds.batch(config.batch_size, drop_remainder=True).prefetch(AUTO)
 
     test_ds = tf.data.Dataset.from_tensor_slices((x_test, y_test))
-    test_ds = test_ds.batch(config.batch_size).prefetch(AUTO)
+    test_ds = test_ds.batch(config.batch_size, drop_remainder=True).prefetch(AUTO)
 
     return (train_ds, val_ds, test_ds)
