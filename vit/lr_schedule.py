@@ -13,7 +13,7 @@ class WarmUpCosine(keras.optimizers.schedules.LearningRateSchedule):
         self.pi = tf.constant(np.pi)
 
     def get_config(self):
-        config = super().get_config()
+        config = dict()
         config.update(self.config)
         config.update({"warmup_steps": self.warmup_steps})
         config.update({"total_steps": self.total_steps})

@@ -28,6 +28,7 @@ from vit.utils import logger
 _AUTO = tf.data.AUTOTUNE
 
 logging.getLogger().setLevel(logging.INFO)
+keras.utils.set_random_seed(42)
 
 
 def parse_arguments():
