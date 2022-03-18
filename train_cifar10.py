@@ -127,7 +127,7 @@ def main(args):
         )
 
         logging.info("Training the model...")
-        ckpt_path = os.path.join(cifar10_config.artifact_dir, "checkpoints")
+        ckpt_path = os.path.join(cifar10_config.artifact_dir, "checkpoints/")
         _ = vit_classifier.fit(
             train_ds,
             epochs=cifar10_config.epochs,
