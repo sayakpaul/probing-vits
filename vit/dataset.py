@@ -1,9 +1,14 @@
-# import the necessary packages
+from typing import Tuple
+
+import ml_collections
 import tensorflow as tf
 from tensorflow import keras
 
 
-def get_cifar_dataset(config):
+def get_cifar_dataset(
+    config: ml_collections.ConfigDict,
+) -> Tuple[tf.data.Dataset, tf.data.Dataset, tf.data.Dataset]:
+    """Loads the CIFAR-10 dataset and prepares tf.data.Dataset objects."""
     (x_train, y_train), (x_test, y_test) = keras.datasets.cifar10.load_data()
     (x_train, y_train), (x_val, y_val) = (
         (x_train[:40000], y_train[:40000]),

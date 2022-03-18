@@ -1,4 +1,3 @@
-# import the necessary packages
 import ml_collections
 import tensorflow as tf
 from tensorflow import keras
@@ -10,11 +9,11 @@ class PositionalEmbedding(layers.Layer):
         super().__init__(**kwargs)
         self.config = config
 
-        # Compute the positions
+        # Compute the positions.
         positions = self.config.num_patches
         positions += 1 if self.config.classifier == "token" else 0
 
-        # Build the sequence of positions in 1D
+        # Build the sequence of positions in 1D.
         self.pos_flat_patches = tf.range(positions, dtype=tf.float32, delta=1)
 
         # Encode the positions with an Embedding layer.
@@ -22,7 +21,9 @@ class PositionalEmbedding(layers.Layer):
             self.pos_embedding = layers.Embedding(
                 input_dim=self.config.num_patches,
                 output_dim=self.config.projection_dim,
-                embeddings_initializer=keras.initializers.RandomNormal(stddev=0.02),
+                embeddings_initializer=keras.initializers.RandomNormal(
+                    stddev=0.02
+                ),
             )
 
     def get_config(self):
@@ -31,6 +32,7 @@ class PositionalEmbedding(layers.Layer):
         return config
 
     def get_1d_sincos_pos_embed(self):
+        # Inspired from https://github.com/huggingface/transformers/blob/master/src/transformers/models/vit_mae/modeling_vit_mae.py#L184.
         # Build the sine-cosine positional embedding.
         omega = tf.range(self.config.projection_dim // 2, dtype=tf.float32)
         omega /= self.config.projection_dim / 2.0
@@ -56,6 +58,6 @@ class PositionalEmbedding(layers.Layer):
         else:
             pos_emb = self.get_1d_sincos_pos_embed()
 
-        # Inject the positional embeddings with the tokens
+        # Inject the positional embeddings with the tokens.
         outputs = inputs + pos_emb
         return outputs
