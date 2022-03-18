@@ -21,7 +21,7 @@ from pprint import pformat
 
 import logging
 
-logging.getLogger(__name__).setLevel(logging.INFO)
+logging.getLogger().setLevel(logging.INFO)
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
