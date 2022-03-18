@@ -12,6 +12,13 @@ class WarmUpCosine(keras.optimizers.schedules.LearningRateSchedule):
         self.total_steps = total_steps
         self.pi = tf.constant(np.pi)
 
+    def get_config(self):
+        config = super().get_config()
+        config.update(self.config)
+        config.update({"warmup_steps": self.warmup_steps})
+        config.update({"total_steps": self.total_steps})
+        return config
+
     def __call__(self, step):
         if self.total_steps < self.warmup_steps:
             raise ValueError(
