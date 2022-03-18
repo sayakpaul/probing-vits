@@ -10,6 +10,7 @@ from vit import (
     get_cifar_dataset,
     ViTClassifier,
     WarmUpCosine,
+    get_augmentation_model
 )
 
 import tensorflow as tf
@@ -20,6 +21,8 @@ import argparse
 from pprint import pformat
 
 import logging
+
+_AUTO = tf.data.AUTOTUNE
 
 logging.getLogger().setLevel(logging.INFO)
 
@@ -45,6 +48,25 @@ logging.info(pformat(cifar10_config))
 
 logging.info("Grabbing the CIFAR10 dataset...")
 (train_ds, val_ds, test_ds) = get_cifar_dataset(config=cifar10_config)
+
+# preprocess the training, validation and the testing dataset
+train_augmentation_model = get_augmentation_model(config=cifar10_config, train=True)
+test_augmentation_model = get_augmentation_model(config=cifar10_config, train=False)
+train_ds = (
+    train_ds
+    .map(lambda image, label: (train_augmentation_model(image), label))
+    .prefetch(_AUTO)
+)
+val_ds = (
+    val_ds
+    .map(lambda image, label: (test_augmentation_model(image), label))
+    .prefetch(_AUTO)
+)
+test_ds = (
+    test_ds
+    .map(lambda image, label: (test_augmentation_model(image), label))
+    .prefetch(_AUTO)
+)
 
 # building the vit_classifier
 logging.info("Building the ViT model...")

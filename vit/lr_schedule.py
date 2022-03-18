@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 
-
+# Reference: https://keras.io/examples/vision/shiftvit/#learning-rate-schedule
 class WarmUpCosine(keras.optimizers.schedules.LearningRateSchedule):
     def __init__(self, config, warmup_steps, total_steps):
         super().__init__()
