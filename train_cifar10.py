@@ -14,6 +14,7 @@ from pprint import pformat
 import tensorflow as tf
 import tensorflow_addons as tfa
 from tensorflow import keras
+from tensorflow.keras import mixed_precision
 
 from vit import (
     ViTClassifier,
@@ -35,13 +36,20 @@ def parse_arguments():
         "-c",
         "--classifier",
         required=True,
-        help="token or gap for the vit representation",
+        help="Using ``cls` token or GAP for the vit representation.",
     )
     ap.add_argument(
         "-p",
         "--position",
         required=True,
-        help="learn or sincos for positional embedding",
+        help="Learned or sincos for positional embedding.",
+    )
+    ap.add_argument(
+        "-m",
+        "--use-mp",
+        action="store_true",
+        required=False,
+        help="If we are using mixed-precision training.",
     )
 
     args = vars(ap.parse_args())
@@ -49,6 +57,9 @@ def parse_arguments():
 
 
 def main(args):
+    if args["use_mp"]:
+        mixed_precision.set_global_policy("mixed_float16")
+
     cifar10_config = get_cifar10_config()
     timestamp = datetime.utcnow().strftime("%y%m%d-%H%M%S")
 
@@ -127,6 +138,7 @@ def main(args):
                     monitor="val_accuracy",
                     mode="max",
                     save_best_only=True,
+                    save_weights_only=True,
                 )
             ],
         )

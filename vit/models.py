@@ -130,7 +130,10 @@ class ViTClassifier(keras.Model):
             epsilon=config.layer_norm_eps
         )
         self.classifier_head = layers.Dense(
-            config.num_classes, kernel_initializer="zeros", name="classifier"
+            config.num_classes,
+            kernel_initializer="zeros",
+            dtype="float32",
+            name="classifier",
         )
 
     def call(self, inputs, training=True):
