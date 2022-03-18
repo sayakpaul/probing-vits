@@ -1,10 +1,7 @@
 from .config import get_config
 from .cifar10_config import get_cifar10_config
 from .dataset import get_cifar_dataset
-from .models import (
-    ViTClassifier,
-    get_augmentation_model
-)
+from .models import ViTClassifier, get_augmentation_model
 from .lr_schedule import WarmUpCosine
 
 __all__ = [
@@ -13,5 +10,5 @@ __all__ = [
     get_cifar_dataset,
     ViTClassifier,
     WarmUpCosine,
-    get_augmentation_model
+    get_augmentation_model,
 ]

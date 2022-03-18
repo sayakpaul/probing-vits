@@ -10,7 +10,7 @@ from vit import (
     get_cifar_dataset,
     ViTClassifier,
     WarmUpCosine,
-    get_augmentation_model
+    get_augmentation_model,
 )
 
 import tensorflow as tf
@@ -52,21 +52,15 @@ logging.info("Grabbing the CIFAR10 dataset...")
 # preprocess the training, validation and the testing dataset
 train_augmentation_model = get_augmentation_model(config=cifar10_config, train=True)
 test_augmentation_model = get_augmentation_model(config=cifar10_config, train=False)
-train_ds = (
-    train_ds
-    .map(lambda image, label: (train_augmentation_model(image), label))
-    .prefetch(_AUTO)
-)
-val_ds = (
-    val_ds
-    .map(lambda image, label: (test_augmentation_model(image), label))
-    .prefetch(_AUTO)
-)
-test_ds = (
-    test_ds
-    .map(lambda image, label: (test_augmentation_model(image), label))
-    .prefetch(_AUTO)
-)
+train_ds = train_ds.map(
+    lambda image, label: (train_augmentation_model(image), label)
+).prefetch(_AUTO)
+val_ds = val_ds.map(
+    lambda image, label: (test_augmentation_model(image), label)
+).prefetch(_AUTO)
+test_ds = test_ds.map(
+    lambda image, label: (test_augmentation_model(image), label)
+).prefetch(_AUTO)
 
 # building the vit_classifier
 logging.info("Building the ViT model...")

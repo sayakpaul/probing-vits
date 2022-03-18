@@ -65,14 +65,16 @@ def get_augmentation_model(config: ml_collections.ConfigDict, train=True):
                 layers.RandomCrop(config.image_size, config.image_size),
                 layers.RandomFlip("horizontal"),
                 layers.Rescaling(1 / 255.0),
-            ], name="train_aug"
+            ],
+            name="train_aug",
         )
     else:
         data_augmentation = keras.Sequential(
             [
                 layers.Resizing(config.input_shape[0] + 20, config.input_shape[0] + 20),
                 layers.Rescaling(1 / 255.0),
-            ], name="test_aug"
+            ],
+            name="test_aug",
         )
     return data_augmentation
 
