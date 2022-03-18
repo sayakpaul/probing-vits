@@ -119,13 +119,14 @@ class ViTClassifier(keras.Model):
     def call(self, inputs, training=True):
         # Augment the input images
         inputs = self.augmentation(inputs, training=training)
+        n = tf.shape(inputs)[0]
 
         # Create patches and project the pathces.
         projected_patches = self.projection(inputs)
 
         # Append class token if needed.
         if self.config.classifier == "token":
-            cls_token = tf.tile(self.cls_token, (self.config.batch_size, 1, 1))
+            cls_token = tf.tile(self.cls_token, (n, 1, 1))
             projected_patches = tf.concat([cls_token, projected_patches], axis=1)
 
         # Add positional embeddings to the projected patches.
