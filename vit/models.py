@@ -79,6 +79,7 @@ def get_augmentation_model(config: ml_collections.ConfigDict, train=True):
                 layers.Resizing(
                     config.input_shape[0] + 20, config.input_shape[0] + 20
                 ),
+                layers.CenterCrop(config.image_size, config.image_size),
                 layers.Rescaling(1 / 255.0),
             ],
             name="test_aug",
