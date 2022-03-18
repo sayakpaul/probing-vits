@@ -1,8 +1,8 @@
 # USAGE
-# python train.py --classifier token --position learn
-# python train.py --classifier token --position sincos
-# python train.py --classifier gap --position learn
-# python train.py --classifier gap --position sincos
+# python train_cifar10.py --classifier token --position learn
+# python train_cifar10.py --classifier token --position sincos
+# python train_cifar10.py --classifier gap --position learn
+# python train_cifar10.py --classifier gap --position sincos
 
 
 import argparse
@@ -56,7 +56,7 @@ def main(args):
         # Update the config according to the CLI arguments.
         cifar10_config.pos_emb_mode = args["position"]
         cifar10_config.classifier = args["classifier"]
-        cifar10_config.artifact_dir = f"{cifar10_config.ds_name}-{args['position']}-{args['classifier']-{timestamp}}"
+        cifar10_config.artifact_dir = f"{cifar10_config.ds_name}-{args['position']}-{args['classifier']}-{timestamp}"
 
     if not os.path.exists(cifar10_config.artifact_dir):
         os.makedirs(cifar10_config.artifact_dir)
