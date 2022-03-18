@@ -1,5 +1,5 @@
 # USAGE
-# python train_cifar10.py --classifier token --position learn
+# python train_cifar10.py --classifier token --position learn --use-mp
 # python train_cifar10.py --classifier token --position sincos
 # python train_cifar10.py --classifier gap --position learn
 # python train_cifar10.py --classifier gap --position sincos
@@ -37,7 +37,7 @@ def parse_arguments():
         "-c",
         "--classifier",
         required=True,
-        help="Using ``cls` token or GAP for the vit representation.",
+        help="Using `cls` token or GAP for the vit representation.",
     )
     ap.add_argument(
         "-p",
