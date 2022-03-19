@@ -1,9 +1,11 @@
 import ml_collections
 
+
 def get_config() -> ml_collections.ConfigDict:
     config = ml_collections.ConfigDict()
 
     config.batch_size = 32
+    config.buffer_size = config.batch_size * 2
     config.input_shape = (224, 224, 3)
 
     config.image_size = 224
@@ -11,7 +13,7 @@ def get_config() -> ml_collections.ConfigDict:
     config.num_patches = (config.image_size // config.patch_size) ** 2
     config.num_classes = 10
 
-    config.pos_emb_mode = "sin-cos"
+    config.pos_emb_mode = "sincos"
 
     config.layer_norm_eps = 1e-6
     config.projection_dim = 768
