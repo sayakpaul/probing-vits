@@ -145,6 +145,8 @@ class ViTClassifier(keras.Model):
         # Append class token if needed.
         if self.config.classifier == "token":
             cls_token = tf.tile(self.cls_token, (n, 1, 1))
+            if cls_token.dtype != projected_patches.dtype:
+                cls_token = tf.cast(cls_token, projected_patches.dtype)
             projected_patches = tf.concat(
                 [cls_token, projected_patches], axis=1
             )
