@@ -1,7 +1,7 @@
-# import the necessary packages
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
+
 
 # Reference: https://keras.io/examples/vision/shiftvit/#learning-rate-schedule
 class WarmUpCosine(keras.optimizers.schedules.LearningRateSchedule):
@@ -11,6 +11,13 @@ class WarmUpCosine(keras.optimizers.schedules.LearningRateSchedule):
         self.warmup_steps = warmup_steps
         self.total_steps = total_steps
         self.pi = tf.constant(np.pi)
+
+    def get_config(self):
+        config = dict()
+        config.update(self.config)
+        config.update({"warmup_steps": self.warmup_steps})
+        config.update({"total_steps": self.total_steps})
+        return config
 
     def __call__(self, step):
         if self.total_steps < self.warmup_steps:
@@ -30,8 +37,12 @@ class WarmUpCosine(keras.optimizers.schedules.LearningRateSchedule):
                     f"lr_start {self.config.lr_start} must be smaller or"
                     + f"equal to lr_max {self.config.lr_max}."
                 )
-            slope = (self.config.lr_max - self.config.lr_start) / self.warmup_steps
-            warmup_rate = slope * tf.cast(step, tf.float32) + self.config.lr_start
+            slope = (
+                self.config.lr_max - self.config.lr_start
+            ) / self.warmup_steps
+            warmup_rate = (
+                slope * tf.cast(step, tf.float32) + self.config.lr_start
+            )
             learning_rate = tf.where(
                 step < self.warmup_steps, warmup_rate, learning_rate
             )

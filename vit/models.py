@@ -1,12 +1,11 @@
-# import the necessary packages
-from .pos_embed import PositionalEmbedding
+from typing import List
 
 import ml_collections
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 
-from typing import List
+from .layers.pos_embed import PositionalEmbedding
 
 
 def mlp(x: int, dropout_rate: float, hidden_units: List):
@@ -32,7 +31,9 @@ def transformer(config: ml_collections.ConfigDict, name: str) -> keras.Model:
     encoded_patches = layers.Input((num_patches, config.projection_dim))
 
     # Layer normalization 1.
-    x1 = layers.LayerNormalization(epsilon=config.layer_norm_eps)(encoded_patches)
+    x1 = layers.LayerNormalization(epsilon=config.layer_norm_eps)(
+        encoded_patches
+    )
 
     # Multi Head Self Attention layer 1.
     attention_output, attention_score = layers.MultiHeadAttention(
@@ -49,7 +50,9 @@ def transformer(config: ml_collections.ConfigDict, name: str) -> keras.Model:
     x3 = layers.LayerNormalization(epsilon=config.layer_norm_eps)(x2)
 
     # MLP layer 1.
-    x4 = mlp(x3, hidden_units=config.mlp_units, dropout_rate=config.dropout_rate)
+    x4 = mlp(
+        x3, hidden_units=config.mlp_units, dropout_rate=config.dropout_rate
+    )
 
     # Skip connection 2.
     outputs = layers.Add()([x2, x4])
@@ -61,7 +64,9 @@ def get_augmentation_model(config: ml_collections.ConfigDict, train=True):
     if train:
         data_augmentation = keras.Sequential(
             [
-                layers.Resizing(config.input_shape[0] + 20, config.input_shape[0] + 20),
+                layers.Resizing(
+                    config.input_shape[0] + 20, config.input_shape[0] + 20
+                ),
                 layers.RandomCrop(config.image_size, config.image_size),
                 layers.RandomFlip("horizontal"),
                 layers.Rescaling(1 / 255.0),
@@ -71,7 +76,10 @@ def get_augmentation_model(config: ml_collections.ConfigDict, train=True):
     else:
         data_augmentation = keras.Sequential(
             [
-                layers.Resizing(config.input_shape[0] + 20, config.input_shape[0] + 20),
+                layers.Resizing(
+                    config.input_shape[0] + 20, config.input_shape[0] + 20
+                ),
+                layers.CenterCrop(config.image_size, config.image_size),
                 layers.Rescaling(1 / 255.0),
             ],
             name="test_aug",
@@ -118,9 +126,14 @@ class ViTClassifier(keras.Model):
             self.gap_layer = layers.GlobalAvgPool1D()
 
         self.dropout = layers.Dropout(config.dropout_rate)
-        self.layer_norm = layers.LayerNormalization(epsilon=config.layer_norm_eps)
+        self.layer_norm = layers.LayerNormalization(
+            epsilon=config.layer_norm_eps
+        )
         self.classifier_head = layers.Dense(
-            config.num_classes, kernel_initializer="zeros", name="classifier"
+            config.num_classes,
+            kernel_initializer="zeros",
+            dtype="float32",
+            name="classifier",
         )
 
     def call(self, inputs, training=True):
@@ -132,7 +145,11 @@ class ViTClassifier(keras.Model):
         # Append class token if needed.
         if self.config.classifier == "token":
             cls_token = tf.tile(self.cls_token, (n, 1, 1))
-            projected_patches = tf.concat([cls_token, projected_patches], axis=1)
+            if cls_token.dtype != projected_patches.dtype:
+                cls_token = tf.cast(cls_token, projected_patches.dtype)
+            projected_patches = tf.concat(
+                [cls_token, projected_patches], axis=1
+            )
 
         # Add positional embeddings to the projected patches.
         encoded_patches = self.positional_embedding(
@@ -147,9 +164,13 @@ class ViTClassifier(keras.Model):
         # Transformer.
         for transformer_module in self.transformer_blocks:
             # Add a Transformer block.
-            encoded_patches, attention_score = transformer_module(encoded_patches)
+            encoded_patches, attention_score = transformer_module(
+                encoded_patches
+            )
             if not training:
-                attention_scores[f"{transformer_module.name}_att"] = attention_score
+                attention_scores[
+                    f"{transformer_module.name}_att"
+                ] = attention_score
 
         # Final layer normalization.
         representation = self.layer_norm(encoded_patches)

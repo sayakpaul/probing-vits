@@ -3,6 +3,7 @@ import ml_collections
 
 def get_cifar10_config() -> ml_collections.ConfigDict:
     config = ml_collections.ConfigDict()
+    config.ds_name = "cifar10"
 
     config.batch_size = 256
     config.buffer_size = config.batch_size * 2
@@ -32,5 +33,6 @@ def get_cifar10_config() -> ml_collections.ConfigDict:
     config.lr_max = 1e-3
     config.weight_decay = 1e-4
     config.patience = 5
+    config.artifact_dir = "."
 
     return config.lock()
