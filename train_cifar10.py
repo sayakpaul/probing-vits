@@ -104,7 +104,7 @@ def main(args):
 
         logging.info("Compiling the model...")
         total_steps = int(
-            train_ds.cardinality().numpy() * cifar10_config.epochs
+            cifar10_config.num_training_examples * cifar10_config.epochs
         )
         warmup_steps = int(total_steps * cifar10_config.warmup_epoch_percentage)
         scheduled_lrs = WarmUpCosine(
@@ -143,6 +143,7 @@ def main(args):
                 )
             ],
         )
+        vit_classifier.load_weights(ckpt_path)
 
         logging.info("Testing the model...")
         loss, acc_top1, acc_top5 = vit_classifier.evaluate(test_ds)
@@ -151,7 +152,6 @@ def main(args):
         logging.info(f"Top 5 test accuracy: {acc_top5*100:0.2f}%")
 
         logging.info("Serializing model with the best checkpoints.")
-        vit_classifier.load_weights(ckpt_path)
         vit_classifier.save(
             os.path.join(cifar10_config.artifact_dir, "best_model")
         )

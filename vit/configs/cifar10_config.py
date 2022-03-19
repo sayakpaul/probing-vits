@@ -6,6 +6,7 @@ def get_cifar10_config() -> ml_collections.ConfigDict:
     config.ds_name = "cifar10"
 
     config.batch_size = 256
+    config.num_training_examples = 40000
     config.buffer_size = config.batch_size * 2
     config.input_shape = (32, 32, 3)
 
