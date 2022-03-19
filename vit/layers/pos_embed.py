@@ -59,5 +59,7 @@ class PositionalEmbedding(layers.Layer):
             pos_emb = self.get_1d_sincos_pos_embed()
 
         # Inject the positional embeddings with the tokens.
+        if pos_emb.dtype != inputs.dtype:
+            pos_emb = tf.cast(pos_emb, inputs.dtype)
         outputs = inputs + pos_emb
         return outputs
