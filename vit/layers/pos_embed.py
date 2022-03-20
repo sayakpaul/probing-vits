@@ -19,7 +19,9 @@ class PositionalEmbedding(layers.Layer):
         # Encode the positions with an Embedding layer.
         if self.config.pos_emb_mode == "learn":
             self.pos_embedding = layers.Embedding(
-                input_dim=self.config.num_patches,
+                input_dim=self.config.num_patches + 1
+                if self.config.classifier == "token"
+                else self.config.num_patches,
                 output_dim=self.config.projection_dim,
                 embeddings_initializer=keras.initializers.RandomNormal(
                     stddev=0.02

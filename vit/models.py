@@ -9,6 +9,7 @@ from .layers.pos_embed import PositionalEmbedding
 
 
 def mlp(x: int, dropout_rate: float, hidden_units: List):
+    """FFN for a Transformer block."""
     # Iterate over the hidden units and
     # add Dense => Dropout.
     for (idx, units) in enumerate(hidden_units):
@@ -23,6 +24,7 @@ def mlp(x: int, dropout_rate: float, hidden_units: List):
 
 
 def transformer(config: ml_collections.ConfigDict, name: str) -> keras.Model:
+    """Transformer block with pre-norm."""
     num_patches = (
         config.num_patches + 1
         if config.classifier == "token"
@@ -60,34 +62,9 @@ def transformer(config: ml_collections.ConfigDict, name: str) -> keras.Model:
     return keras.Model(encoded_patches, [outputs, attention_score], name=name)
 
 
-def get_augmentation_model(config: ml_collections.ConfigDict, train=True):
-    if train:
-        data_augmentation = keras.Sequential(
-            [
-                layers.Resizing(
-                    config.input_shape[0] + 20, config.input_shape[0] + 20
-                ),
-                layers.RandomCrop(config.image_size, config.image_size),
-                layers.RandomFlip("horizontal"),
-                layers.Rescaling(1 / 255.0),
-            ],
-            name="train_aug",
-        )
-    else:
-        data_augmentation = keras.Sequential(
-            [
-                layers.Resizing(
-                    config.input_shape[0] + 20, config.input_shape[0] + 20
-                ),
-                layers.CenterCrop(config.image_size, config.image_size),
-                layers.Rescaling(1 / 255.0),
-            ],
-            name="test_aug",
-        )
-    return data_augmentation
-
-
 class ViTClassifier(keras.Model):
+    """Class that collates all the different elements for a Vision Transformer."""
+
     def __init__(self, config: ml_collections.ConfigDict, **kwargs):
         super().__init__(**kwargs)
         self.config = config
@@ -139,7 +116,7 @@ class ViTClassifier(keras.Model):
     def call(self, inputs, training=True):
         n = tf.shape(inputs)[0]
 
-        # Create patches and project the pathces.
+        # Create patches and project the patches.
         projected_patches = self.projection(inputs)
 
         # Append class token if needed.
@@ -187,3 +164,31 @@ class ViTClassifier(keras.Model):
         if not training:
             return output, attention_scores
         return output
+
+
+def get_augmentation_model(config: ml_collections.ConfigDict, train=True):
+    """Augmentation transformation models."""
+    if train:
+        data_augmentation = keras.Sequential(
+            [
+                layers.Resizing(
+                    config.input_shape[0] + 20, config.input_shape[0] + 20
+                ),
+                layers.RandomCrop(config.image_size, config.image_size),
+                layers.RandomFlip("horizontal"),
+                layers.Rescaling(1 / 255.0),
+            ],
+            name="train_aug",
+        )
+    else:
+        data_augmentation = keras.Sequential(
+            [
+                layers.Resizing(
+                    config.input_shape[0] + 20, config.input_shape[0] + 20
+                ),
+                layers.CenterCrop(config.image_size, config.image_size),
+                layers.Rescaling(1 / 255.0),
+            ],
+            name="test_aug",
+        )
+    return data_augmentation
