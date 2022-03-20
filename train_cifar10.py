@@ -103,9 +103,7 @@ def main(args):
         vit_classifier = ViTClassifier(cifar10_config, name="vit")
 
         logging.info("Compiling the model...")
-        total_steps = int(
-            cifar10_config.num_training_examples * cifar10_config.epochs
-        )
+        total_steps = int(train_ds.cardinality() * cifar10_config.epochs)
         warmup_steps = int(total_steps * cifar10_config.warmup_epoch_percentage)
         scheduled_lrs = WarmUpCosine(
             config=cifar10_config,
