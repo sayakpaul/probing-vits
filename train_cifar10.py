@@ -76,6 +76,7 @@ def main(args):
     logfile = os.path.join(cifar10_config.artifact_dir, f"logs.txt")
 
     with logger.Logger(logfile):
+        logging.info("Training with the following configuration.")
         logging.info(pformat(cifar10_config.to_dict()))
 
         (train_ds, val_ds, test_ds) = get_cifar_dataset(config=cifar10_config)
