@@ -130,3 +130,7 @@ dmypy.json
 
 # For MAC
 .DS_Store
+
+# Misc
+*.npz
+*.txt
