@@ -15,6 +15,7 @@ def get_config() -> ml_collections.ConfigDict:
 
     config.pos_emb_mode = "sincos"
 
+    config.initializer_range = 0.02
     config.layer_norm_eps = 1e-6
     config.projection_dim = 768
     config.num_heads = 12
