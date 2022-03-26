@@ -85,7 +85,6 @@ def transformer_extended(
     attention_output, attention_score = TFViTAttention(config)(
         x1, output_attentions=True
     )
-    attention_output = layers.Dropout(config.dropout_rate)(attention_output)
 
     # Skip connection 1.
     x2 = layers.Add()([attention_output, encoded_patches])
