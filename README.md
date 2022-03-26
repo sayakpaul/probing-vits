@@ -12,3 +12,4 @@ This repository holds code to probe into the representations learned by a Vision
 
 - [PyImageSearch](https://pyimagesearch.com)
 - [Jarvislabs.ai](https://jarvislabs.ai/)
+- [GDE Program](https://developers.google.com/programs/experts/)

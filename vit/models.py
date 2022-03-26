@@ -85,7 +85,6 @@ def transformer_extended(
     attention_output, attention_score = TFViTAttention(config)(
         x1, output_attentions=True
     )
-    attention_output = layers.Dropout(config.dropout_rate)(attention_output)
 
     # Skip connection 1.
     x2 = layers.Add()([attention_output, encoded_patches])
@@ -155,7 +154,7 @@ class ViTClassifier(keras.Model):
             name="classifier",
         )
 
-    def call(self, inputs, training=True):
+    def call(self, inputs, training=True, pre_logits=False):
         n = tf.shape(inputs)[0]
 
         # Create patches and project the patches.
@@ -200,12 +199,17 @@ class ViTClassifier(keras.Model):
         elif self.config.classifier == "gap":
             encoded_patches = self.gap_layer(representation)
 
-        # Classification head.
-        output = self.classifier_head(encoded_patches)
+        if pre_logits:
+            return encoded_patches
 
-        if not training:
-            return output, attention_scores
-        return output
+        else:
+            # Classification head.
+            output = self.classifier_head(encoded_patches)
+
+            if not training:
+                return output, attention_scores
+            else:
+                return output
 
 
 class ViTClassifierExtended(keras.Model):
@@ -272,7 +276,7 @@ class ViTClassifierExtended(keras.Model):
             name="classifier",
         )
 
-    def call(self, inputs, training=True):
+    def call(self, inputs, training=True, pre_logits=False):
         n = tf.shape(inputs)[0]
 
         # Create patches and project the patches.
@@ -317,12 +321,17 @@ class ViTClassifierExtended(keras.Model):
         elif self.config.classifier == "gap":
             encoded_patches = self.gap_layer(representation)
 
-        # Classification head.
-        output = self.classifier_head(encoded_patches)
+        if pre_logits:
+            return encoded_patches
+        
+        else:
+            # Classification head.
+            output = self.classifier_head(encoded_patches)
 
-        if not training:
-            return output, attention_scores
-        return output
+            if not training:
+                return output, attention_scores
+            else:
+                return output
 
 
 def get_augmentation_model(config: ml_collections.ConfigDict, train=True):
