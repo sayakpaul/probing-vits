@@ -2,6 +2,14 @@
 
 This repository holds code to probe into the representations learned by a Vision Transformer [1] using ideas presented in [2].
 
+
+## Videos
+
+| Dino | Dog |
+| :--: | :--: |
+| <video src='./assets/video-tf-dino.mp4'/> | <video src='./assets/video-tf-dog.mp4'/> |
+
+
 ## References
 
 [1] An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale: https://arxiv.org/abs/2010.11929
