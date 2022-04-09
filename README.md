@@ -7,7 +7,7 @@ This repository holds code to probe into the representations learned by a Vision
 
 | Dino | Dog |
 | :--: | :--: |
-| <video src='./assets/video-tf-dino.mp4'/> | <video src='./assets/video-tf-dog.mp4'/> |
+| <video src='./assets/video-tf-dino.mp4' width=180/> | <video src='./assets/video-tf-dog.mp4' width=180/> |
 
 
 ## References
