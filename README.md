@@ -47,6 +47,11 @@ a ViT-B16 model pre-trained (supervised) using ImageNet-1k:
 
 We used this [Colab Notebook](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/vitb16-attention-maps-video.ipynb) to conduct this experiment.
 
+## Visualizing mean attention distances
+
+<div align="center">
+<img src="./assets/vit_base_i21k_patch16_224.png" width=450/>
+</div>
 
 ## Methods
 
