@@ -15,7 +15,9 @@ We hope these tools will prove to be useful for the community. Please follow alo
 
 ## Self-attention visualization
 
-<img src="./assets/dino_attention_heads.png" height=500 width=500/>
+| Original Image | Attention Maps | Attention maps overlayed |
+| :--: | :--: | :--: |
+| ![original image](./assets/bird.png) | ![attention maps](./assets/dino_attention_heads_inferno.png) | ![attention maps overlay](./assets/dino_attention_heads.png) |
 
 https://user-images.githubusercontent.com/36856589/162609884-8e51156e-d461-421d-9f8a-4d4e48967bd6.mp4
 
