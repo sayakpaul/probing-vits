@@ -2,7 +2,7 @@
 
 [![TensorFlow 2.8](https://img.shields.io/badge/TensorFlow-2.8-FF6F00?logo=tensorflow)](https://github.com/tensorflow/tensorflow/releases/tag/v2.8.0)
 
-_By [Aritra Roy Gosthipaty](https://github.com/ariG23498) and [Sayak Paul](https://github.com/sayakpaul)_
+_By [Aritra Roy Gosthipaty](https://github.com/ariG23498) and [Sayak Paul](https://github.com/sayakpaul) (equal contribution)_
 
 In this repository, we provide tools to probe into the representations learned by different families of Vision Transformers (supervised pre-training with ImageNet-21k, ImageNet-1k, distillation, self-supervised pre-training):
 
