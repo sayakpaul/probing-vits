@@ -40,7 +40,11 @@ We obtain the attention maps generated with the supervised pre-trained model and
 
 <img src="./assets/supervised-dino.gif" height=200>
 
+*Supervised salient representation of the dinosaur*
+
 <img src="./assets/supervised-dog.gif" height=200>
+
+*Supervised salient representation of the dog*
 
 The [Colab Notebook]() to verify the findings.
 
