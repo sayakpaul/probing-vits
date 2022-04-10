@@ -12,9 +12,18 @@ In this repository, we provide tools to probe into the representations learned b
 
 We hope these tools will prove to be useful for the community. Please follow along with this post (coming soon) on keras.io for better navigation through the repository. 
 
-[--InfoGraphic--]
+
+## Self-attention visualization
+
+<img src="./assets/dino_attention_heads.png" height=500 width=500/>
+
+https://user-images.githubusercontent.com/36856589/162609884-8e51156e-d461-421d-9f8a-4d4e48967bd6.mp4
+
+https://user-images.githubusercontent.com/36856589/162609907-4e432dc4-a731-40f4-9a20-94e0c8f648bc.mp4
+
 
 ## Methods
+
 **We don't propose any novel methods of probing the representations of neural networks. Instead we take the existing works and implement them in TensorFlow.**
 
 * Mean attention distance [1, 4]
@@ -24,12 +33,16 @@ We hope these tools will prove to be useful for the community. Please follow alo
 
 Another interesting repository that also visualizes ViTs in PyTorch: https://github.com/jacobgil/vit-explain.
 
+
 ## Notes
+
 We first implemented the above-mentioned architectures in TensorFlow and then we populated the pre-trained parameters into them using the official codebases. In order to validate this, we evaluated the implementations on the ImageNet-1k validation set and ensured that the reported top-1 accuracies matched. 
 
 We value the spirit of open-source. So, if you spot any bugs in the code or see a scope for improvement don't hesitate to open up an issue or contribute a PR. We'd very much appreciate it. 
 
+
 ## Navigating through the codebase
+
 Our ViT implementations are in `vit`. We provide utility notebooks in `notebooks` which contains the following:
 
 * [`dino-attention-maps-video.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/dino-attention-maps-video.ipynb) shows how to generate attention heatmaps from a video.
@@ -41,9 +54,11 @@ Our ViT implementations are in `vit`. We provide utility notebooks in `notebooks
 
 DeiT-related code has its separate repository: https://github.com/sayakpaul/deit-tf.
 
+
 ## Training and visualizing with small datasets
 
 Coming soon!
+
 
 ## References
 
