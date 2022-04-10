@@ -38,9 +38,9 @@ A screenshot of the video is as follows:
 
 We obtain the attention maps generated with the supervised pre-trained model and find that they are not that salient w.r.t the DINO model. This observation aligns with their findings.
 
-https://user-images.githubusercontent.com/36856589/162615237-7b7b14e9-e44d-4d92-a234-81beb7fd86c0.mp4
+<img src="./assets/supervised-dino.gif" height=200>
 
-https://user-images.githubusercontent.com/36856589/162615317-07d7475d-f0b8-43bf-9de2-ebe033365482.mp4
+<img src="./assets/supervised-dog.gif" height=200>
 
 The [Colab Notebook]() to verify the findings.
 
