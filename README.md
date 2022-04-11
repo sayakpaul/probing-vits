@@ -58,7 +58,7 @@ We used this [Colab Notebook](https://github.com/sayakpaul/probing-vits/blob/mai
 **We don't propose any novel methods of probing the representations of neural networks. Instead we take the existing works and implement them in TensorFlow.**
 
 * Mean attention distance [1, 4]
-* Attention-flow [1]
+* Attention Rollout [5]
 * Attention maps from individual attention heads [3]
 * Generation of attention heatmaps from videos [3]
 
@@ -100,6 +100,8 @@ Coming soon!
 [3] DINO: https://arxiv.org/abs/2104.14294
 
 [4] Do Vision Transformers See Like Convolutional Neural Networks?:  [https://arxiv.org/abs/2108.08810](https://arxiv.org/abs/2108.08810)
+
+[5] [Quantifying Attention Flow in Transformers](https://arxiv.org/abs/2005.00928)
 
 ## Acknowledgements
 
