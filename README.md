@@ -81,7 +81,7 @@ Our ViT implementations are in `vit`. We provide utility notebooks in `notebooks
 * [`load-dino-weights-vitb16.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/load-dino-weights-vitb16.ipynb) shows how to populate the pre-trained DINO parameters into our implementation. 
 * [`load-jax-weights-vitb16.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/load-jax-weights-vitb16.ipynb) shows how to populate the pre-trained ViT parameters into our implementation. 
 * [`mean-attention-distance-1k.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/mean-attention-distance-1k.ipynb) shows how to plot mean attention distances of different transformer blocks of different ViTs computed over 1000 images.
-* [`single-instance-probing.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/single-instance-probing.ipynb) shows how to compute mean attention distance, attention-flow map for a single prediction instance.
+* [`single-instance-probing.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/single-instance-probing.ipynb) shows how to compute mean attention distance, attention-rollout map for a single prediction instance.
 
 DeiT-related code has its separate repository: https://github.com/sayakpaul/deit-tf.
 
