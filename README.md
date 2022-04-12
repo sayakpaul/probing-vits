@@ -51,9 +51,9 @@ We used this [Colab Notebook](https://github.com/sayakpaul/probing-vits/blob/mai
 
 You can now probe into the ViTs with your own input images.
 
-| Attention Heat Maps | Roll out Attention |
+| Attention Heat Maps | Attention Rollout |
 | :--: | :--: |
-| [![Generic badge](https://img.shields.io/badge/🤗%20Spaces-Attention%20Heat%20Maps-black.svg)](https://huggingface.co/spaces/probing-vits/attention-heat-maps) | [![Generic badge](https://img.shields.io/badge/🤗%20Spaces-Roll%20Out%20Attention-black.svg)](https://huggingface.co/spaces/probing-vits/attention-rollout) |
+| [![Generic badge](https://img.shields.io/badge/🤗%20Spaces-Attention%20Heat%20Maps-black.svg)](https://huggingface.co/spaces/probing-vits/attention-heat-maps) | [![Generic badge](https://img.shields.io/badge/🤗%20Spaces-Attention%20Rollout-black.svg)](https://huggingface.co/spaces/probing-vits/attention-rollout) |
 
 ## Visualizing mean attention distances
 
