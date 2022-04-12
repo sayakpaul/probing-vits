@@ -47,6 +47,14 @@ a ViT-B16 model pre-trained (supervised) using ImageNet-1k:
 
 We used this [Colab Notebook](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/vitb16-attention-maps-video.ipynb) to conduct this experiment.
 
+## Hugging Face Spaces
+
+You can now probe into the ViTs with your own input images.
+
+| Attention Heat Maps | Roll out Attention |
+| :--: | :--: |
+| [![Generic badge](https://img.shields.io/badge/🤗%20Spaces-Attention%20Heat%20Maps-black.svg)](https://huggingface.co/spaces/probing-vits/attention-heat-maps) | [![Generic badge](https://img.shields.io/badge/🤗%20Spaces-Roll%20Out%20Attention-black.svg)](https://huggingface.co/spaces/probing-vits/attention-rollout) |
+
 ## Visualizing mean attention distances
 
 <div align="center">
