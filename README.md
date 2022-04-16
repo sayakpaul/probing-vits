@@ -68,6 +68,7 @@ You can now probe into the ViTs with your own input images.
 
 * Mean attention distance [1, 4]
 * Attention Rollout [5]
+* Visualization of the learned projection filters [1]
 * Attention maps from individual attention heads [3]
 * Generation of attention heatmaps from videos [3]
 
@@ -91,6 +92,7 @@ Our ViT implementations are in `vit`. We provide utility notebooks in `notebooks
 * [`load-jax-weights-vitb16.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/load-jax-weights-vitb16.ipynb) shows how to populate the pre-trained ViT parameters into our implementation. 
 * [`mean-attention-distance-1k.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/mean-attention-distance-1k.ipynb) shows how to plot mean attention distances of different transformer blocks of different ViTs computed over 1000 images.
 * [`single-instance-probing.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/single-instance-probing.ipynb) shows how to compute mean attention distance, attention-rollout map for a single prediction instance.
+* [`visualizing-linear-projections.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/visualizing-linear-projections.ipynb) shows visualizations of the linear projection filters learned by ViTs.
 
 DeiT-related code has its separate repository: https://github.com/sayakpaul/deit-tf.
 
