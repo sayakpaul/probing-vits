@@ -11,7 +11,7 @@ In this repository, we provide tools to probe into the representations learned b
 * DeiT [2]
 * DINO [3]
 
-We hope these tools will prove to be useful for the community. Please follow along with this post (coming soon) on keras.io for better navigation through the repository. 
+We hope these tools will prove to be useful for the community. Please follow along with [this post on keras.io](https://keras.io/examples/vision/probing_vits/) for a better navigation through the repository. 
 
 
 ## Self-attention visualization
