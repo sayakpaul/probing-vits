@@ -98,6 +98,15 @@ Our ViT implementations are in `vit`. We provide utility notebooks in `notebooks
 
 DeiT-related code has its separate repository: https://github.com/sayakpaul/deit-tf.
 
+## Models
+
+Here are the links to the models where the pre-trained parameters were populated:
+
+* [Original ViT model (pretrained on ImageNet-21k and fine-tuned on ImageNet-1k)](https://huggingface.co/probing-vits/vit_b16_patch16_224_i21k_i1k)
+* [Original ViT model (pretrained on ImageNet-1k)](https://huggingface.co/probing-vits/vit_b16_patch16_224_i1k)
+* [DINO model (pretrained on ImageNet-1k)](https://huggingface.co/probing-vits/vit-dino-base16)
+* [DeiT models (pretrained on ImageNet-1k including distilled and non-distilled ones)](https://tfhub.dev/sayakpaul/collections/deit/1)
+
 
 ## Training and visualizing with small datasets
 
