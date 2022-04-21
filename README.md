@@ -123,7 +123,7 @@ Coming soon!
 
 [4] Do Vision Transformers See Like Convolutional Neural Networks?:  [https://arxiv.org/abs/2108.08810](https://arxiv.org/abs/2108.08810)
 
-[5] [Quantifying Attention Flow in Transformers](https://arxiv.org/abs/2005.00928)
+[5] Quantifying Attention Flow in Transformers: https://arxiv.org/abs/2005.00928
 
 ## Acknowledgements
 
