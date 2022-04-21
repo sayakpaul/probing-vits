@@ -85,7 +85,7 @@ We value the spirit of open-source. So, if you spot any bugs in the code or see 
 
 ## Navigating through the codebase
 
-Our ViT implementations are in `vit`. We provide utility notebooks in `notebooks` which contains the following:
+Our ViT implementations are in `vit`. We provide utility notebooks in the `notebooks` directory which contains the following:
 
 * [`dino-attention-maps-video.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/dino-attention-maps-video.ipynb) shows how to generate attention heatmaps from a video.
 * [`dino-attention-maps.ipynb`](https://github.com/sayakpaul/probing-vits/blob/main/notebooks/dino-attention-maps.ipynb) shows how to generate attention maps from individual attention heads from the final transformer block.
