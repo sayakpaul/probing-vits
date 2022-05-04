@@ -13,6 +13,9 @@ In this repository, we provide tools to probe into the representations learned b
 
 We hope these tools will prove to be useful for the community. Please follow along with [this post on keras.io](https://keras.io/examples/vision/probing_vits/) for a better navigation through the repository. 
 
+**Updates**
+
+* May 4, 2022: We're glad to receive the [#TFCommunitySpotlight award](https://twitter.com/TensorFlow/status/1521558632768409600?s=20&t=hXgrZOfT_26AuTC_RyCZ_g) for this project.
 
 ## Self-attention visualization
 
