@@ -15,6 +15,7 @@ We hope these tools will prove to be useful for the community. Please follow alo
 
 **Updates**
 
+* May 10, 2022: The project got a mention from Yannic Kilcher in [ML News](https://youtu.be/pwSnC8jlh50?t=712). Thanks, Yannic!
 * May 4, 2022: We're glad to receive the [#TFCommunitySpotlight award](https://twitter.com/TensorFlow/status/1521558632768409600?s=20&t=hXgrZOfT_26AuTC_RyCZ_g) for this project.
 
 ## Self-attention visualization
